@@ -50,7 +50,53 @@ matriceCarree x y = do
 
   {-==== exercise 5 ====-}
 positionIndex :: Int -> [Int] -> [Int]
-positionIndex element xs = fst $ foldl(\acc x -> if x == element then ((fst acc) ++ [snd acc] , (snd acc) + 1) else (fst acc,(snd acc) + 1) ) acc xs
+positionIndex element xs = fst $ foldl(\acc x -> if x == element then (fst acc ++ [snd acc] , snd acc + 1) else (fst acc,snd acc + 1) ) acc xs
   where acc = ([],0)
 
+  {-==== exercise 6 ====-}
+dichotomous :: Int -> [Int] -> Int
+dichotomous nombre [] = -1
+dichotomous nombre [x] = if nombre == x then 0 else -1
+dichotomous nombre xs 
+  | nombre == milieu = milieu
+  | nombre > elementMax = length newtab2 + dichotomous nombre newtab1
+  | otherwise = dichotomous nombre newtab2
+    where newtab1 = drop milieu xs
+          newtab2 = take milieu xs
+          elementMax = maximum newtab2 
+          milieu = div taille 2
+          taille = length xs
 
+  
+  {-==== exercise 7 ====-}
+
+
+  {-==== exercise 12 ====-}
+f:: [Int] -> [Int] -> [Int]
+f [] [] = []
+f xs [] = xs
+f [] ys = ys
+f xs ys 
+    | mxs > mys = f ixs ys ++ [mxs]
+    | mxs < mys = f xs iys ++ [mys]
+    |otherwise = f ixs iys ++ [mxs,mys]
+        where mxs = maximum xs
+              mys = maximum ys 
+              ixs = init xs 
+              iys = init ys
+
+
+exo12 :: IO ()
+exo12 = do
+  putStr "Enter the first file name : "
+  fichier1 <- getLine
+  putStr "Enter the second file name : "
+  fichier2 <- getLine
+  putStr "Enter the saved file name : "
+  sauvegarde <- getLine
+  contenu1 <- readFile fichier1
+  contenu2 <- readFile fichier2
+  let new1 = map (\x -> read x :: Int) $ words contenu1
+      new2 = map (\x -> read x :: Int) $ words  contenu2
+      result = f new1 new2
+  writeFile sauvegarde (show result)
