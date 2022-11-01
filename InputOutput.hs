@@ -69,6 +69,14 @@ dichotomous nombre xs
 
   
   {-==== exercise 7 ====-}
+func::[(Int,Int)] -> [Int]
+func xs = foldr (\(x,y) acc -> (x-y) : acc) acc xs
+    where acc = []
+
+exercise7 :: IO()
+exercise7 = do
+  putStr "Enter the file name "
+  file <- getLine
 
 
   {-==== exercise 12 ====-}
