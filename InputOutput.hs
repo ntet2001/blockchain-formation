@@ -2,6 +2,7 @@ import System.IO
 import System.IO.Error
 import System.Environment
 
+
 {-=== exercise1 ===-}
 reverseString:: String -> IO ()
 reverseString [] = return ()
@@ -69,14 +70,25 @@ dichotomous nombre xs
 
   
   {-==== exercise 7 ====-}
-func::[(Int,Int)] -> [Int]
-func xs = foldr (\(x,y) acc -> (x-y) : acc) acc xs
+func::[(Int,Int)] -> [String]
+func = foldr (\(x,y) acc -> show (x-y) : acc) acc
     where acc = []
+
+tuple :: String -> (Int,Int)
+tuple [] = (0,0)
+tuple xs = read xs :: (Int,Int)
+
+callFichierExo7 = catchIOError exercise7 (\e -> putStrLn "====== The file doesn't exist =======") 
 
 exercise7 :: IO()
 exercise7 = do
   putStr "Enter the file name "
   file <- getLine
+  content <- readFile file
+  let transform = words content
+      resultat1 = map tuple transform 
+      final = func resultat1 
+  writeFile "save.txt" $ unlines final
 
 
   {-==== exercise 12 ====-}
