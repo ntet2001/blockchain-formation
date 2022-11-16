@@ -1,8 +1,8 @@
-module Conference
+module Conference.Conference
 (
     newConference,
-    firstLetter
-    --,listConference
+    firstLetter,
+    listConference
     --,addSponsor
     --,listSponsor
     ,Conference
@@ -16,7 +16,7 @@ module Conference
 )where
 
 import Data.Char
-
+import Data.List
     {-=============== Here are my types statements ==================-}
 type Sponsor = String
 type Nom = String
@@ -34,11 +34,13 @@ data Conference = Conference {
     dateFin :: String,
     montant :: Int,
     sponsors :: [String]
-} deriving (Show , Read, Ord) 
+} deriving (Show , Read) 
 
 instance Eq Conference where
     (==) c1 c2 = nomConference c1 == nomConference c2 && anneeConference c1 == anneeConference c2
 
+instance Ord Conference where
+    (<=) c1 c2 = nomConference c1 <= nomConference c2 && anneeConference c1 <= anneeConference c2
 
      {-=============== Here are my functions statements ==================-}
 
@@ -71,12 +73,17 @@ newConference nom lieu annee dated datef montanttmp = do
         montant = montanttmp,
         sponsors = []
     }
-        conference = idConference conferencetmp ++ " " ++ nomConference conferencetmp ++ " " ++ lieuConference conferencetmp ++ " " ++ show (anneeConference conferencetmp) ++" " ++ dateDebut conferencetmp ++ " " ++ dateFin conferencetmp ++ " " ++ show (montant conferencetmp)
+        conference = idConference conferencetmp ++ " " ++ nomConference conferencetmp ++ " " ++ lieuConference conferencetmp ++ " " ++ show (anneeConference conferencetmp) ++" " ++ dateDebut conferencetmp ++ " " ++ dateFin conferencetmp ++ " " ++ show (montant conferencetmp) ++ "\n"
     appendFile "Conference.txt" conference
-    putStrLn conference
+    putStr conference
 
     -- function to list a Conference in order of name and year
 
+listConference :: IO()
+listConference = do
+    contenuConference <- readFile "Conference.txt"
+    let newContenu = sort $ lines contenuConference
+    putStrLn $ unlines newContenu
 
     
 
