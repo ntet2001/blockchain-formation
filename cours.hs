@@ -61,4 +61,4 @@ verifDate chaine
     | otherwise = False
         where tailleChaine = length chaine
               f :: String -> Bool
-              f [v,w,x,y,z] = isDigit v  && isDigit w && x == '/' && isDigit y  && isDigit z 
+              f [v,w,x,y,z] = isDigit v  && isDigit w && x == '/' && isDigit y  && isDigit z
