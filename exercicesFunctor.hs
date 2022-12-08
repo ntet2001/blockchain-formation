@@ -85,3 +85,75 @@ instance Functor GoatLord where
     fmap f (MoreGoats g h i) = MoreGoats (fmap f g) (fmap f h) (fmap f i)
 
 data TalkToMe a = Halt | Print String a | Read (String -> a)
+instance Functor TalkToMe where
+    fmap f Halt = Halt
+    fmap f (Print g x) = Print g (f x)
+    fmap f (Read h) = Read (f.h)
+
+--exercise 5
+--1.
+--[]
+-- Methods
+--pure :: a ->  [a]
+--(<*>) :: [a -> b] -> [a] -> [b]
+
+--2.
+--IO
+-- Methods
+--pure :: a -> IO a
+--(<*>) :: IO (a -> b) -> IO a -> IO b
+
+--exercise 6
+--1.
+data Pair a = Pair a a deriving Show
+instance Functor Pair where
+    fmap f (Pair x y) = Pair (f x) (f y)
+
+instance Applicative Pair where
+    pure x = Pair x x 
+    Pair f g <*> Pair v w = Pair (f v) (g w)
+
+--2.
+data Two a b = Two a b
+instance Functor (Two a) where
+    fmap f (Two x y) = Two x (f y)
+
+instance Applicative (Two Char) where
+    pure  = Two 'x'
+    (Two f g) <*> (Two x y) = Two x (g y) 
+
+--3.
+data Three a b c = Three a b c
+instance Functor (Three a b) where
+    fmap f (Three x y z) = Three x y (f z) 
+
+instance Applicative (Three Char Char) where
+    pure = Three 'a' 'b' 
+    (Three f g h) <*> (Three x y z) = Three x y (h z)
+
+--4. 
+data Three' a b = Three' a b b
+instance Functor (Three' a) where
+    fmap f (Three' x y z) = Three' x (f y) (f z) 
+
+instance Applicative (Three' Char) where
+    pure x = Three' 'z' x x
+    (Three' f g h) <*> (Three' x y z) = Three' x (g y) (h z)
+
+--5.
+data Four a b c d = Four a b c d
+instance Functor (Four a b c) where
+    fmap f (Four w x y z) = Four w x y (f z)
+
+instance Applicative (Four Bool Bool Bool) where
+    pure = Four True True True
+    (Four f g h j) <*> (Four a b c d) = Four a b c (j d)
+
+--6. 
+data Four' a b = Four' a a a b
+instance Functor (Four' a) where
+    fmap f (Four' a b c d) = Four' a b c (f d)
+
+instance Applicative (Four' Bool) where
+    pure = Four' True True True 
+    (Four' f g h j) <*> (Four' a b c d) = Four' a b c (j d)
