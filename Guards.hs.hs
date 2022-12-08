@@ -24,8 +24,8 @@ maximumr xs = foldr(\x acc -> if x > acc then x else acc) 0 xs
 
 --reverse function with foldl
 reversel:: [a] -> [a]
-reversel xs = foldl(\acc x -> x:acc) [] xs
+reversel = foldl(\acc x -> x:acc) [] 
 
 --head function with foldr
 headr ::Num a => [a] -> a
-headr xs = foldr(\x acc -> x) 0 xs
+headr  = foldr(\x acc -> x) 0 
