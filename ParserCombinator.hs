@@ -46,9 +46,11 @@ instance Alternative Parser where
 
 
 --implementation of a Parser
--- char :: Char -> Parser Char
--- char chaine = Parser phrase 
---     where phrase [] = Nothing
---           phrase (x:xs) 
---             | x == chaine = Just (chaine, xs)
---             | otherwise = Nothing
+char :: Char -> Parser Char
+char chaine = Parser phrase 
+     where phrase [] = Nothing
+           phrase (x:xs) 
+             | x == chaine = Just (chaine, xs)
+             | otherwise = Nothing
+
+
