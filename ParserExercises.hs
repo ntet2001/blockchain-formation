@@ -170,21 +170,27 @@ parseUba :: String -> Either ParseError Uba
 parseUba = parse pu ""
 
 
-parserEmail :: Parser String          -- jean94@domain.com
-parserEmail = do
-   first <- many lower
-   chiffre <- many (lower <|> digit)
-   char '@'
-   second <- many lower
-   char '.'
-   end <- many lower
-   let email = first ++ chiffre ++  "@" ++ second ++ "." ++ end
-   return email
- 
-fonctionEmail :: String -> Either ParseError String
-fonctionEmail = parse parserEmail "email non valide"
+--parser d'un email ---
+--manyamaigor2001@gmail.com
+
+data Email = Mkemail {
+        identifiant :: String,
+        domaine :: String,
+        extension :: String
+}deriving Show
+
+pe :: Parser Email
+pe = do 
+        identifiant <- many (letter <|> digit <|> noneOf "@")
+        char '@'
+        domaine <- many (letter <|> digit <|> lower)
+        char '.'
+        extension <- many (letter <|> digit <|> noneOf "@" <|> lower )
+        return $ Mkemail identifiant domaine extension
 
 
+parseEmail :: String -> Either ParseError Email
+parseEmail = parse pe ""
 
 
 
