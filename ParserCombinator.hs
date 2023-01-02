@@ -54,3 +54,6 @@ char chaine = Parser phrase
              | otherwise = Nothing
 
 
+--quand utiliser Label ou <?> , Test des parsers
+--powerpoint
+--

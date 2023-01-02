@@ -111,7 +111,12 @@ data Sms = MkSms {
 
 ps :: Parser Sms
 ps = do
-    string "Vous avez recu "
+    string "Vous"
+    many space
+    string "avez"
+    many space
+    string "recu" 
+    many space
     montant <- many digit
     string " FCFA de "
     nomExp <- many (letter <|> char ' ')
