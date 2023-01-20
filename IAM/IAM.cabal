@@ -27,6 +27,8 @@ library
   exposed-modules:
       App.VerificationOperateur
       Common.SimpleType
+      Database.SaveOperateur
+      Domain.CreationOperateur
       Lib
   other-modules:
       Paths_IAM
@@ -36,6 +38,7 @@ library
   build-depends:
       base >=4.7 && <5
     , bytestring
+    , parsec
   default-language: Haskell2010
 
 executable IAM-exe
@@ -49,6 +52,7 @@ executable IAM-exe
       IAM
     , base >=4.7 && <5
     , bytestring
+    , parsec
   default-language: Haskell2010
 
 test-suite IAM-test
@@ -63,4 +67,5 @@ test-suite IAM-test
       IAM
     , base >=4.7 && <5
     , bytestring
+    , parsec
   default-language: Haskell2010

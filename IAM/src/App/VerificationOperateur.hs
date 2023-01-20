@@ -1,62 +1,70 @@
 module App.VerificationOperateur
 (
-valPhoto,
-verificationNom    
+verificationPhoto,
+verificationNom,
+verificationEmail, 
+parserEmail,
+fonctpoint   
 ) 
 where
 
     --importation of Type
     import qualified Data.ByteString.Char8 as C
-    import Common.SimpleType
+    import Text.Parsec
+    import Text.ParserCombinators.Parsec
+    import Text.ParserCombinators.Parsec.Language()
+    import qualified Common.SimpleType as ST
+    import Data.List
 
     {--------------------------------==== Function to validate the name ====--------------------------------}
-    verificationNom :: String -> Either String Nom
-    verificationNom nom 
-        | length nom < 2 = Left "Nom invalide"
-        | otherwise = Right nom
+    parserNom :: Parser ST.Nom
+    parserNom = do
+        nom <- getInput
+        if (length nom) < 2 then 
+            unexpected "Photo invalide"
+        else 
+            return nom
+
+    verificationNom :: String -> Either ParseError ST.Nom
+    verificationNom nom = parse parserNom "" nom
 
     {--------------------------------==== Function to validate the email ====--------------------------------}
-    -- parserEmail :: Parser Email -- jean94@domain.com
-    -- parserEmail = do
-    --     x <- parserIdentifiant
-    --     let y = parse parserPoint "" x
-    --         case y of
-    --             Left _ -> unexpected x
-    --             Right a -> do
-    --                 let u = a
-    --                 char '@'
-    --                 var <- many (noneOf ".")
-    --                 let varParser = parse parserDomaine "" var
-    --                 case varParser of
-    --                     Left _ -> unexpected var
-    --                     Right b -> do
-    --                     let k = b
-    --                     char '.'
-    --                     z <- many letter <?> "extension non-valide "
-    --                     let email = Email {first = u, second = k, end = z}
-    --                     return email
+    fonctpoint :: String -> String
+    fonctpoint xs
+        | nbrePoints >= 1 = if last xs == '.' then "" 
+                else f xs 
+        | otherwise = xs
+                where   nbrePoints = length $ elemIndices '.' xs
+                        f :: String -> String 
+                        f xs = let (i:is) = elemIndices '.' xs 
+                                   (l:m:ys) = [x | x <- [xs !! j | j <- [i..(length xs)]]]
+                                in if ([l,m] == "..") then "" 
+                                else xs
 
-    -- parserIdentifiant :: Parser String
-    -- parserIdentifiant = do
-    --     lookingFor <- many (noneOf "@")
-    --     return lookingFor
+    parserEmail :: Parser ST.Email -- jean94@domain.com
+    parserEmail = do 
+        n1 <- many (noneOf "@")
+        let identifiant = fonctpoint n1
+        char '@'
+        domaine <- many (letter <|> digit)
+        char '.'
+        extension <- many (letter <|> digit <|> noneOf "@" )
+        return $ ST.MkEmail identifiant domaine extension
 
-    -- parserPoint :: Parser String
-    -- parserPoint = do
-    --     x <- many (noneOf ".") `sepBy` (char '.')
-    --     if "" `elem` x then unexpected "ne doit pas commencer par '.' | contient au moins deux points consecutifs" else return $ intercalate "." x
-
-    -- parserDomaine :: Parser String
-    -- parserDomaine = do
-    --     firstChar <- noneOf "-0123456789"
-    --     dopo <- many (noneOf "-") `sepBy` char '-'
-    --     if "" `elem` dopo then unexpected "ne commence pas par un tiret" else return (firstChar : intercalate "-" dopo)
-
-    --verificationEmail :: String -> Either ParseError Email
-    --verificationEmail email = parse parserEmail "email non valide" email
+    verificationEmail :: String -> Either ParseError ST.Email
+    verificationEmail email = parse parserEmail "email non valide" email
 
     {----------==== Function to validated the picture ====-----------------}
-    verificationPhoto :: C.ByteString -> Either String Photo
-    verificationPhoto photo
-        | C.length photo < 25000 = Left "Photo invalide"
-        | otherwise = Right photo
+    parserPhoto :: Parser ST.Photo
+    parserPhoto = do
+        photo <- getInput
+        let a = C.pack photo
+            b = C.length a
+        if b < 5 then 
+            unexpected "Photo invalide"
+        else 
+            return a
+
+    verificationPhoto :: String -> Either ParseError ST.Photo
+    verificationPhoto = parse parserPhoto "Nom valide"
+        

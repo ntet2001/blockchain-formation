@@ -1,0 +1,7 @@
+{"name" : ntet;
+"prenom" : igor;
+"matricule" : IUC19E0049740;
+"email" : manyamaigor2001@gmail.com;
+"password" : Ntetigor#2001;
+"photo" : lllllllllllllllllllllllllllllllllllllllll;
+}

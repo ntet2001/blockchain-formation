@@ -5,10 +5,10 @@ NomOp,
 PrenomOp, 
 Matricule,
 Identifiant,
-Email,
+Email(..),
 PasswordOp,
 Photo,
-Operateur,    
+Operateur(..),    
 )
 where
 
@@ -21,16 +21,16 @@ where
     type PrenomOp = Nom 
     type Matricule = String
     type Identifiant = String
-    data Email = MkEmail {first :: Identifiant, second :: String, end :: String}
+    data Email = MkEmail { identifiant :: Identifiant, domaine :: String, extension :: String } deriving Read
     type PasswordOp = String
     type Photo = C.ByteString
-    data Operateur = MkOp { nomOp :: NomOp, prenomOp :: PrenomOp, matricule::Matricule, email :: Email, passwordOp :: PasswordOp, photo :: Photo }
+    data Operateur = MKOperateur { nomOp :: NomOp, prenomOp :: PrenomOp, matricule::Matricule, email :: Email, passwordOp :: PasswordOp, photo :: Photo } deriving Read 
 
     --instance Show of Email
     instance Show Email where
-        show y = if null (first y)
+        show y = if null (identifiant y)
             then error "identifiant nul"
-            else first y ++ "@" ++ second y ++ "." ++ end y
+            else identifiant y ++ "@" ++ domaine y ++ "." ++ extension y
 
     -- instance Show of Operateur
     instance Show Operateur where
