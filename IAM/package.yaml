@@ -1,10 +1,10 @@
-name:                helloworld
+name:                IAM
 version:             0.1.0.0
-github:              "githubuser/helloworld"
+github:              "githubuser/IAM"
 license:             BSD3
 author:              "Author name here"
 maintainer:          "example@example.com"
-copyright:           "2022 Author name here"
+copyright:           "2023 Author name here"
 
 extra-source-files:
 - README.md
@@ -17,13 +17,11 @@ extra-source-files:
 # To avoid duplicated efforts in documentation and dealing with the
 # complications of embedding Haddock markup inside cabal files, it is
 # common to point users to the README.md file.
-description:         Please see the README on GitHub at <https://github.com/githubuser/helloworld#readme>
+description:         Please see the README on GitHub at <https://github.com/githubuser/IAM#readme>
 
 dependencies:
 - base >= 4.7 && < 5
-- hspec
-- QuickCheck
-
+- bytestring
 ghc-options:
 - -Wall
 - -Wcompat
@@ -39,7 +37,7 @@ library:
   source-dirs: src
 
 executables:
-  helloworld-exe:
+  IAM-exe:
     main:                Main.hs
     source-dirs:         app
     ghc-options:
@@ -47,10 +45,10 @@ executables:
     - -rtsopts
     - -with-rtsopts=-N
     dependencies:
-    - helloworld
+    - IAM
 
 tests:
-  helloworld-test:
+  IAM-test:
     main:                Spec.hs
     source-dirs:         test
     ghc-options:
@@ -58,4 +56,4 @@ tests:
     - -rtsopts
     - -with-rtsopts=-N
     dependencies:
-    - helloworld
+    - IAM

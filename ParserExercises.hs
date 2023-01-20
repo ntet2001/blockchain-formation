@@ -8,8 +8,10 @@ import Text.ParserCombinators.Parsec
 import qualified Text.ParserCombinators.Parsec.Token as P
 import qualified Text.Parsec as TP
 import Text.ParserCombinators.Parsec.Language
-import Data.List ( intercalate )
+import Data.List
+import Data.Char
 import Text.Parsec (endOfLine)
+import Data.Password.Validate 
 --import Text.ParserCombinators.Parsec
 --import qualified Text.ParserCombinators.Parsec.Token as P
 --import Text.ParserCombinators.Parsec.Language
@@ -35,6 +37,18 @@ type Jour = String
 type Mois = String
 type Annee = Int
 
+type PassOp = String
+
+data Email = Mkemail {
+        identifiant :: String,
+        domaine :: String,
+        extension :: String
+}
+
+instance Show Email where
+        show x = if null (identifiant x) then
+                        error "Identifiant null"
+                 else identifiant x ++ "@" ++ domaine x ++ "." ++ extension x
  
 
 parserDeDate :: Parser Date
@@ -178,28 +192,29 @@ parseUba = parse pu ""
 --parser d'un email ---
 --manyamaigor2001@gmail.com
 
-data Email = Mkemail {
-        identifiant :: String,
-        domaine :: String,
-        extension :: String
-}deriving Show
+fonctpoint :: String -> String
+fonctpoint xs
+        | nbrePoints >= 1 = if last xs == '.' then "" 
+                else f xs 
+        | otherwise = xs
+                where   nbrePoints = length $ elemIndices '.' xs
+                        f :: String -> String 
+                        f xs = let (i:is) = elemIndices '.' xs 
+                                   (l:m:ys) = [x | x <- [xs !! j | j <- [i..(length xs)]]]
+                                in if ([l,m] == "..") then "" 
+                                else xs
 
 pe :: Parser Email
 pe = do 
-        identifiant <- many (letter <|> digit <|> noneOf "@")
+        n1 <- many (noneOf "@")
+        let identifiant = fonctpoint n1
         char '@'
-        domaine <- many (letter <|> digit <|> lower)
+        domaine <- many (letter <|> digit)
         char '.'
-        extension <- many (letter <|> digit <|> noneOf "@" <|> lower )
+        extension <- many (letter <|> digit <|> noneOf "@" )
         return $ Mkemail identifiant domaine extension
 
 
 parseEmail :: String -> Either ParseError Email
 parseEmail = parse pe ""
-
-
-
-
-
-
 
