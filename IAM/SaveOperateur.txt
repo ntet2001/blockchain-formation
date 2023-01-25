@@ -1,7 +1,2 @@
-{"name" : ntet;
-"prenom" : igor;
-"matricule" : IUC19E0049740;
-"email" : manyamaigor2001@gmail.com;
-"password" : Ntetigor#2001;
-"photo" : lllllllllllllllllllllllllllllllllllllllll;
-}
+MKOperateur {nomOp = "ntet", prenomOp = "igor", matricule = "IUC19E00002299", email = MkEmail {identifiant = "manyamaigor2001", domaine = "gmai", extension = "com"}, passwordOp = "Ntetigor2000$", photo = "1222222333333333333333333333"}
+MKOperateur {nomOp = "raoul", prenomOp = "gonzalez", matricule = "IUC300000222", email = MkEmail {identifiant = "raoulelie", domaine = "gmail", extension = "com"}, passwordOp = "Raoul200$$", photo = "20000330000000000000"}
