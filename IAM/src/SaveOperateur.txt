@@ -1,0 +1,2 @@
+MKOperateur {nomOp = "ntet", prenomOp = "igor", matricule = "IUC21E00045", email = MkEmail {identifiant = "manyamaigor2001", domaine = "gmail", extension = "com"}, passwordOp = "Ntetigor200$", photo = "11111111111111111111", visibilite = Non, statut = Deconnecter}
+MKOperateur {nomOp = "raoul", prenomOp = "elie", matricule = "IUG19E00055", email = MkEmail {identifiant = "elieraoul", domaine = "yahoo", extension = "com"}, passwordOp = "Raoul300$", photo = "20000000000000000", visibilite = Oui, statut = Deconnecter}

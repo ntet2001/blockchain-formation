@@ -22,7 +22,7 @@ verificationOp
         if null contenu1filtre then 
             return $ Right op 
         else 
-            return $ Left $ "le matricule appartient à" ++ show contenu1filtre
+            return $ Left $ "le matricule appartient a" ++ show contenu1filtre
 
     {---------------------------==== Function to register an Operator ====--------------------------------}
 

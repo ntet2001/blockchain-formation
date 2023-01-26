@@ -2,6 +2,8 @@ module Domain.CreationOperateur
 (
 verificationMatricule,
 verificationPassword,
+verificationStatut,
+verificationVisibilite,
 parserPassword,
 creerOperateur
 )where
@@ -41,6 +43,24 @@ creerOperateur
     verificationPassword :: String -> Either ParseError  PasswordOp
     verificationPassword mdp = parse parserPassword "" mdp
 
+    {--------------------------==== Function to validated Statut ====----------------------------------}
+    verificationStatut :: String -> Either ParseError Statut 
+    verificationStatut = parse parserStatut "" 
+        where parserStatut = do
+                            statut <- many letter
+                            case statut of
+                                "Connecter" -> return Connecter
+                                "Deconnecter" -> return Deconnecter
+
+    {--------------------------==== Function to validated Visibility ====----------------------------------}
+    verificationVisibilite :: String -> Either ParseError Visibilite 
+    verificationVisibilite = parse parserVisibilite "" 
+        where parserVisibilite = do
+                            vue <- many letter
+                            case vue of
+                                "Oui" -> return Oui
+                                "Non" -> return Non
+
     {---------------------===== Function to Create an Operator =====----------}
     creerOperateur :: NomOp -> PrenomOp -> Matricule -> PasswordOp -> String -> String -> Either ParseError Operateur
     creerOperateur nom prenom matricule email password photo = MKOperateur <$> 
@@ -49,4 +69,6 @@ creerOperateur
         verificationMatricule matricule<*> 
         VO.verificationEmail email<*> 
         verificationPassword password<*> 
-        VO.verificationPhoto photo
+        VO.verificationPhoto photo <*>
+        verificationVisibilite "Oui" <*>
+        verificationStatut "Deconnecter"

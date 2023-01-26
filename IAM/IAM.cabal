@@ -27,6 +27,7 @@ library
   exposed-modules:
       App.VerificationOperateur
       Common.SimpleType
+      Database.ReadOperateur
       Database.SaveOperateur
       Domain.CreationOperateur
       Lib

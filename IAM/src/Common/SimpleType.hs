@@ -8,7 +8,9 @@ Identifiant,
 Email(..),
 PasswordOp,
 Photo,
-Operateur(..),    
+Operateur(..),
+Visibilite(..),
+Statut(..)   
 )
 where
 
@@ -21,7 +23,9 @@ where
     type PrenomOp = Nom 
     type Matricule = String
     type Identifiant = String
+    data Statut = Connecter | Deconnecter deriving (Show,Read)
+    data Visibilite = Oui | Non deriving (Show,Read,Eq)
     data Email = MkEmail { identifiant :: Identifiant, domaine :: String, extension :: String } deriving (Show ,Read)
     type PasswordOp = String
     type Photo = C.ByteString
-    data Operateur = MKOperateur { nomOp :: NomOp, prenomOp :: PrenomOp, matricule::Matricule, email :: Email, passwordOp :: PasswordOp, photo :: Photo } deriving (Show,Read) 
+    data Operateur = MKOperateur { nomOp :: NomOp, prenomOp :: PrenomOp, matricule::Matricule, email :: Email, passwordOp :: PasswordOp, photo :: Photo, visibilite :: Visibilite, statut :: Statut } deriving (Show,Read) 
