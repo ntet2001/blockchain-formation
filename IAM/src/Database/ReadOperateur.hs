@@ -1,6 +1,7 @@
 module Database.ReadOperateur
 (
-recupererOp
+recupererOp,
+recupererUnOp
 )where
 
     {---------------------------==== Module importation ====--------------------------------}
