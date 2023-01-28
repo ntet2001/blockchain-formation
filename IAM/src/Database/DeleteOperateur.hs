@@ -1,7 +1,4 @@
-module Database.DeleteOperateur 
-(
-
-)where
+module Database.DeleteOperateur where
 
     {---------------------------==== Module importation ====--------------------------------}
     import qualified Common.SimpleType as ST 
