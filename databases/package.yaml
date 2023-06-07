@@ -25,6 +25,7 @@ dependencies:
 - servant-server
 - wai
 - warp
+- mysql-simple
 
 ghc-options:
 - -Wall

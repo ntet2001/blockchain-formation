@@ -1,0 +1,22 @@
+/home/ntetigor/.stack/programs/x86_64-linux/ghc-tinfo6-9.2.5/lib/ghc-9.2.5/include/ghcversion.h:
+  hash: 8ef6e3cecb29aca3884134f57ae55f780b89ff0e4491f9e76cec81b39be34fe6
+? /home/ntetigor/Documents/blockchain-formation/LaboNotification/.stack-work/dist/x86_64-linux-tinfo6/Cabal-3.6.3.0/build/autogen/Paths_LaboNotification.hs
+: hash: 47c859db8b5a6426ba6f02fe6eefee9b7181e65679dcf124656621f3aaea9f38
+? /home/ntetigor/Documents/blockchain-formation/LaboNotification/.stack-work/dist/x86_64-linux-tinfo6/Cabal-3.6.3.0/build/autogen/cabal_macros.h
+: hash: 0e435dca909e89840e5f7bbe33323012972200e01b5228dd231c4ca80db806d8
+/home/ntetigor/Documents/blockchain-formation/LaboNotification/CHANGELOG.md:
+  hash: b5f76ed15ddee0e9a386e905587f3e1c4b1c7a755619e621cd7370d941e5434d
+/home/ntetigor/Documents/blockchain-formation/LaboNotification/LaboNotification.cabal:
+  hash: 7c87fff29900a38ad8d8b12d8607d76af870f0c543d5fd842c99ea812f06416b
+/home/ntetigor/Documents/blockchain-formation/LaboNotification/README.md:
+  hash: ddeada3fd5417b6152ad725221d8ed23afb59928a8a61b553fe9b643518396a1
+/home/ntetigor/Documents/blockchain-formation/LaboNotification/package.yaml:
+  hash: a0104e6632cd7f3875b7c3675b2be96283d5c11782ac46990b320a83abf796c8
+/home/ntetigor/Documents/blockchain-formation/LaboNotification/src/App/Lib.hs:
+  hash: 40aee3dc0b29042a8bb306e2bedd967913fce874cfdc40c90950d3d32597b4de
+/home/ntetigor/Documents/blockchain-formation/LaboNotification/src/Domain/Domain.hs:
+  hash: 3e8a9daca214c155418dabc5a7136370da7739a5a96802ecd0fb7edf6317c7f1
+/home/ntetigor/Documents/blockchain-formation/LaboNotification/src/Infra/GmailSMTPConnect.hs:
+  hash: 99840bcf687c7ea508c931f5116da5a5d45a2387c00707b71c2a6f9ed27ea081
+/usr/include/stdc-predef.h:
+  hash: cb08cd5d4cc059a90833ac48a284d25016e8d56ded8ad4cd98d8ac59cc5053f3

@@ -1,6 +1,6 @@
 cabal-version: 1.12
 
--- This file has been generated from package.yaml by hpack version 0.35.0.
+-- This file has been generated from package.yaml by hpack version 0.35.1.
 --
 -- see: https://github.com/sol/hpack
 
@@ -26,6 +26,7 @@ source-repository head
 library
   exposed-modules:
       Lib
+      ReadUser
   other-modules:
       Paths_databases
   hs-source-dirs:
@@ -34,6 +35,7 @@ library
   build-depends:
       aeson
     , base >=4.7 && <5
+    , mysql-simple
     , servant-server
     , wai
     , warp
@@ -50,6 +52,7 @@ executable databases-exe
       aeson
     , base
     , databases
+    , mysql-simple
     , servant-server
     , wai
     , warp
@@ -70,6 +73,7 @@ test-suite databases-test
     , hspec
     , hspec-wai
     , hspec-wai-json
+    , mysql-simple
     , servant-server
     , wai
     , warp
