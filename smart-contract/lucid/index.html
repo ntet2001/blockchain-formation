@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <!-- here i import Lucid using the web method -->
+    <script type="module">
+        import { Lucid,Blockfrost } from "https://unpkg.com/lucid-cardano/web/mod.js"
+
+        // ici je selectionne le reseau
+        const lucid = await Lucid.new(new Blockfrost("https://cardano-preprod.blockfrost.io/api/v0","preprodJxJs1SsoD7ZCUWk9sjDWogwNwnGWy1eF"),"Preprod",);
+
+        // ici je selectionne mon wallet (nami)
+        const api = await window.cardano.nami.enable();
+        lucid.selectWallet(api);
+
+        // ici je recupere l'addresse de mon wallet et affiche a la console du navigateur
+
+        const address = await lucid.wallet.address();
+        console.log(address);
+
+        // ici je recupere les Utxos d' une addresse de mon wallet et affiche a la console du navigateur les lovelaces disponibles
+        const utxos = await lucid.wallet.getUtxos();
+        const lovelace = utxos.reduce((acc, utxo) => acc + utxo.assets.lovelace, 0n);
+        console.log(lovelace);
+        
+    </script>
+</body>
+</html>
