@@ -1,6 +1,6 @@
-# TONTINE SMART CONTRACT VERSION (V.0.1) 
+# TONTINE SMART CONTRACT VERSION (V.0.2) 
 
-This is a contribution smart contract, written in **plutus language** for the **cardano blockchain**. Which will allow members of a contribution (tontine) to send their contributions in order to transfer them to a beneficiary of the meeting.
+This is a contribution smart contract, written in **plutus language** and **Lucid framework (Typescript)** for the **cardano blockchain**. Which will allow members of a contribution (tontine) to send their contributions in order to transfer them to a beneficiary of the meeting.
 
 ## Tools needed for the execution of the smart contract.
 
