@@ -1,0 +1,1 @@
+export const  secretSeed: string = "orient embrace strong benefit solar answer duty reveal conduct shallow purse concert husband middle olympic tackle priority tumble cup comic phrase check globe lemon";
