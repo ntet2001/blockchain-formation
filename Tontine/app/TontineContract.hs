@@ -16,15 +16,15 @@ import           Plutus.V2.Ledger.Api      (BuiltinData, PubKeyHash,
 import           Plutus.V2.Ledger.Contexts (txSignedBy, txOutValue, txInInfoResolved, txInInfoOutRef,
                                             findTxInByTxOutRef, txInfoInputs, findOwnInput, txInfoFee
                                             )
-import           PlutusTx                  (applyCode, compile, liftCode,
-                                            makeLift, unstableMakeIsData)
+import           PlutusTx                  (applyCode, compile, liftCode,unsafeFromBuiltinData,
+                                            makeLift, unstableMakeIsData, CompiledCode,toBuiltinData)
 import           PlutusTx.Prelude          (Bool(..), traceIfFalse, (==), (&&), (.),
                                             Integer, otherwise, map, filter,
                                             Maybe(..), foldr, Ord(..), (+), length, (/=)
-                                            , (||), elem)
+                                            , (||), elem, ($))
 import           Prelude                   (IO, FilePath)
-import           Utilities                 (wrapValidator, writeValidatorToFile, writeDataToFile)
-import qualified PlutusTx.IsData.Class
+import           Utilities                 (wrapValidator, writeValidatorToFile, writeDataToFile,writeCodeToFile)
+import qualified PlutusTx.IsData.Class     
 
 ---------------------------------------------------------------------------------------------------
 ----------------------------------- ON-CHAIN / VALIDATOR ------------------------------------------
@@ -75,6 +75,7 @@ data ParamsData = ParamsData {
     membres :: [BuiltinByteString]
 }
 makeLift ''ParamsData
+unstableMakeIsData ''ParamsData
 
 open       :: BuiltinByteString
 open       = "OPEN"
@@ -128,17 +129,23 @@ mkValidatorTontinard pd  (TontineDatum (OperationType datumOt) _ _) (RedeemerDat
 
 
 {-# INLINABLE  mkWrappedParameterizedtontineValidator #-}
-mkWrappedParameterizedtontineValidator :: ParamsData -> BuiltinData -> BuiltinData -> BuiltinData -> ()
-mkWrappedParameterizedtontineValidator = wrapValidator . mkValidatorTontinard
+mkWrappedParameterizedtontineValidator :: BuiltinData -> BuiltinData -> BuiltinData -> BuiltinData -> ()
+mkWrappedParameterizedtontineValidator pd = wrapValidator (mkValidatorTontinard $ unsafeFromBuiltinData pd)
+
+signedCode :: PlutusTx.CompiledCode (BuiltinData -> BuiltinData -> BuiltinData -> BuiltinData -> ())
+signedCode = $$(PlutusTx.compile [|| mkWrappedParameterizedtontineValidator ||])
 
 validator :: ParamsData -> Validator
-validator params = mkValidatorScript ($$(compile [|| mkWrappedParameterizedtontineValidator ||]) `applyCode` liftCode params)
+validator params = mkValidatorScript $ signedCode `applyCode` liftCode (toBuiltinData params)
 
 ---------------------------------------------------------------------------------------------------
 ------------------------------------- HELPER FUNCTIONS --------------------------------------------
 
 saveVal :: ParamsData -> IO ()
 saveVal = writeValidatorToFile "./assets/tontine-smart-contract-v0.1.plutus" . validator
+
+saveSignedCode :: IO ()
+saveSignedCode = writeCodeToFile "./assets/signed-tontine.plutus" signedCode
 
 savaDataToFile :: PlutusTx.IsData.Class.ToData a => FilePath -> a -> IO ()
 savaDataToFile = writeDataToFile 

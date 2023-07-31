@@ -8,13 +8,14 @@ import {
     SpendingValidator,
     Data,
     Datum,
-    Redeemer, UTxO
+    Redeemer, UTxO, fromText, TxHash
 } from "https://deno.land/x/lucid@0.9.1/mod.ts" ;
 import {secretSeed} from "./seed.ts";
 
 // Here initialized Lucid
 const lucid: Lucid = await Lucid.new(
-    new Blockfrost("https://cardano-preview.blockfrost.io/api/v0","previewvu8DskOxmI7v8fdVawmZ6pfUorB2spJ6"),
+    new Blockfrost("https://cardano-preview.blockfrost.io/api/v0",
+        "previewvu8DskOxmI7v8fdVawmZ6pfUorB2spJ6"),
     "Preview",
 );
 
@@ -31,21 +32,9 @@ const matchingNumberScript: SpendingValidator = {
 //Here's the script address
 const tontineaddr: Address = lucid.utils.validatorToAddress(matchingNumberScript)
 const tontineKeyHash: string = "9f61bdb57bba47ba44b379da68d42f9d2971c4a04aa899b5d0834ceb"
+
 // liste des UTXOS de mon script
 const utxosTontine: UTxO[] =  await lucid.utxosAt(tontineaddr);
-
-// define a function that converts a string to hex
-const stringToHex = (str: string) => {
-    let hex = '';
-    for (let i = 0; i < str.length; i++) {
-        const charCode = str.charCodeAt(i);
-        const hexValue = charCode.toString(16);
-
-        // Pad with zeros to ensure two-digit representation
-        hex += hexValue.padStart(2, '0');
-    }
-    return hex;
-};
 
 //Here're my datums definitions
 const OperationType = Data.Object({
@@ -79,19 +68,19 @@ const RedeemerData = Data.Object({
 });
 type RedeemerData = Data.Static<typeof RedeemerData>;
 
-const optClose: OperationType = {getOperationType: stringToHex("CLOSE")};
-const optOpen: OperationType = {getOperationType: stringToHex("OPEN")};
-const optTontine: OperationType = {getOperationType: stringToHex("TONTINE")};
-const optPay: OperationType = {getOperationType: stringToHex("PAY")};
+const optClose: OperationType = {getOperationType: fromText("CLOSE")};
+const optOpen: OperationType = {getOperationType: fromText("OPEN")};
+const optTontine: OperationType = {getOperationType: fromText("TONTINE")};
+const optPay: OperationType = {getOperationType: fromText("PAY")};
 
 //Here're my redeemer
-const redeemClose : RedeemerData = {operationType: optClose, for: stringToHex("TONTINE")};
-const redeemOpen : RedeemerData = {operationType: optOpen, for: stringToHex("TONTINE")};
-const redeemTontine : RedeemerData = {operationType: optTontine, for: stringToHex("raoul")};
-const redeemPay : RedeemerData = {operationType: optPay, for: stringToHex("BENEFICIAIRE")};
+const redeemClose : RedeemerData = {operationType: optClose, for: fromText("TONTINE")};
+const redeemOpen : RedeemerData = {operationType: optOpen, for: fromText("TONTINE")};
+const redeemTontine : RedeemerData = {operationType: optTontine, for: fromText("raoul")};
+const redeemPay : RedeemerData = {operationType: optPay, for: fromText("BENEFICIAIRE")};
 
-const trans: Transactor = {name: stringToHex("raoul")};
-const memb: Member = {identifier: stringToHex("ntet"), mane: stringToHex("ntet"), phonenumber: stringToHex("+237689009854")};
+const trans: Transactor = {name: fromText("raoul")};
+const memb: Member = {identifier: fromText("ntet"), mane: fromText("ntet"), phonenumber: fromText("+237689009854")};
 
 const datumTontineInit: TontineDatum = {operation: optClose, transactor: trans, member: memb};
 const datumTontineClose: TontineDatum = {operation: optClose, transactor: trans, member: memb};
@@ -105,7 +94,7 @@ function getPublicKeyHash(address: string): string {
 }
 
 //fonction pour initialiser la tontine
-async function tontineInit(): Promise<string> {
+async function tontineInit(): Promise<TxHash> {
     const dtmIni: Datum = Data.to<TontineDatum>(datumTontineInit,TontineDatum);
     const tx = await lucid
         .newTx()
@@ -118,7 +107,7 @@ async function tontineInit(): Promise<string> {
 
 //fonction pour ouvrir la tontine
 
-async function tontineOuvre(): Promise<string> {
+async function tontineOuvre(): Promise<TxHash> {
     const dtmOpen: Datum = Data.to<TontineDatum>(datumTontineOpen,TontineDatum);
     const dtmClose: Datum = Data.to<TontineDatum>(datumTontineClose,TontineDatum);
     const rdmOpen: Redeemer = Data.to<RedeemerData>(redeemOpen,RedeemerData);
@@ -133,11 +122,12 @@ async function tontineOuvre(): Promise<string> {
         .complete();
 
     const signedTx = await tx.sign().complete();
-    return await signedTx.submit();
+    const txhash = await signedTx.submit();
+    return txhash;
 }
 
 //foncton pour fermer la tontine
-async function tontineFerme(): Promise<string> {
+async function tontineFerme(): Promise<TxHash> {
     const dtmClose: Datum = Data.to<TontineDatum>(datumTontineClose,TontineDatum);
     const dtmOpen: Datum = Data.to<TontineDatum>(datumTontineOpen,TontineDatum);
     const rdmClose: Redeemer = Data.to<RedeemerData>(redeemClose,RedeemerData);
@@ -152,11 +142,12 @@ async function tontineFerme(): Promise<string> {
         .complete();
 
     const signedTx = await tx.sign().complete();
-    return await signedTx.submit();
+    const txhash = await signedTx.submit();
+    return txhash;
 }
 
 //fonction pour tontiner
-async function tontineTontiner(amount: bigint): Promise<string> {
+async function tontineTontiner(amount: bigint): Promise<TxHash> {
     const dtmTontine: Datum = Data.to<TontineDatum>(datumTontineClose,TontineDatum);
     const dtmOpen: Datum = Data.to<TontineDatum>(datumTontineOpen,TontineDatum);
     const rdmTontine: Redeemer = Data.to<RedeemerData>(redeemTontine,RedeemerData);
@@ -171,11 +162,12 @@ async function tontineTontiner(amount: bigint): Promise<string> {
         .complete();
 
     const signedTx = await tx.sign().complete();
-    return await signedTx.submit();
+    const txhash = await signedTx.submit();
+    return txhash;
 }
 
 // fonction pour payer le beneficiaire de la tontine
-async function tontinePay(beneficiaire: string): Promise<string> {
+async function tontinePay(beneficiaire: string): Promise<TxHash> {
     const dtmClose: Datum = Data.to<TontineDatum>(datumTontineClose,TontineDatum);
     const rdmPay: Redeemer = Data.to<RedeemerData>(redeemPay,RedeemerData);
     const utxosDatumPay: UTxO[] = utxosTontine.filter(utxo => utxo.datum == dtmClose);
@@ -191,7 +183,8 @@ async function tontinePay(beneficiaire: string): Promise<string> {
         .complete();
 
     const signedTx = await tx.sign().complete();
-    return await signedTx.submit();
+    const txhash = await signedTx.submit();
+    return txhash;
 }
 
 console.log("welcome to my tontine off-chain code");
@@ -200,5 +193,5 @@ console.log("welcome to my tontine off-chain code");
 //console.log(tontineOuvre());
 //console.log(tontineFerme());
 //console.log(tontineTontiner(200000000n));
-//console.log(tontinePay("addr_test1vrtw02gz87jzgz2jqnvur2ecagn26uvjqa3yntmt59cm3eg7vee4u"));
+//console.log(tontinePay("addr_test1qrfvl09vznmcqth7mdrvhlvj8rwyx4x22k7kgs7st7e9cmgeswxsf9fae0wj4e3st46hung22dfgaqytuw78z5el86cqrxs0d8"));
 
