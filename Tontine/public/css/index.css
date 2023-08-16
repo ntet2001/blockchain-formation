@@ -1,0 +1,203 @@
+body
+{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    font-family: 'ubuntu';
+}
+
+h1,h2
+{
+    font-weight: bolder;
+    text-align: center;
+    color: rgb(73, 73, 189);
+}
+
+.parametre
+{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    text-align: left;
+    margin: 0px 50px;
+}
+
+.parametre h2{
+    color: rgb(73, 73, 189);
+}
+
+.menu
+{
+    margin-top: 30px;
+}
+
+.menu ul
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 40px 0px;
+}
+
+.menu ul li
+{
+    list-style: none;
+}
+
+.menu ul li a
+{
+    color: white;
+    text-decoration: none;
+    background-color:  rgb(73, 73, 189);
+    margin: 0px 20px;
+    padding: 10px 20px;
+    transition: all 0.4s ease-in-out;
+}
+
+.menu ul li .activer
+{
+    color:  rgb(73, 73, 189);
+    border: solid 1px rgb(73, 73, 189);
+    background-color: white;
+}
+
+#blockParametrage
+{
+    display: block;
+    text-align: center;
+}
+
+input,textarea
+{
+    width: auto;
+    height: auto;
+    margin-bottom: 5px;
+    font-family: 'ubuntu';
+    font-size: 15px;
+    border: none;
+    border: 1px solid rgb(134, 134, 134);
+    border-radius: 3px;
+}
+
+#blockParametrage button
+{
+    color: white;
+    border: none;
+    background-color: transparent;
+    background-color: rgb(42, 42, 223);
+    height: 35px;
+    padding: 0px 25px;
+    border-radius: 4px;
+    font-family: 'ubuntu';
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.4s ease-in-out;
+} 
+#blockParametrage button:hover
+{
+    background-color: rgb(12, 12, 240);
+}
+
+#blockOuvrir
+{
+    display: block;
+    text-align: center;
+    display: none;
+}
+
+#blockOuvrir button
+{
+    color: white;
+    border: none;
+    background-color: transparent;
+    background-color: rgb(42, 42, 223);
+    height: 35px;
+    padding: 0px 25px;
+    border-radius: 4px;
+    font-family: 'ubuntu';
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.4s ease-in-out;
+} 
+#blockOuvrir button:hover
+{
+    background-color: rgb(12, 12, 240);
+}
+
+#blockFermer
+{
+    display: block;
+    text-align: center;
+    display: none;
+}
+
+#blockFermer button
+{
+    color: white;
+    border: none;
+    background-color: transparent;
+    background-color: rgb(42, 42, 223);
+    height: 35px;
+    padding: 0px 25px;
+    border-radius: 4px;
+    font-family: 'ubuntu';
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.4s ease-in-out;
+} 
+#blockFermer button:hover
+{
+    background-color: rgb(12, 12, 240);
+}
+
+#blockTontiner
+{
+    display: block;
+    text-align: center;
+    display: none;
+}
+
+#blockTontiner button
+{
+    color: white;
+    border: none;
+    background-color: transparent;
+    background-color: rgb(42, 42, 223);
+    height: 35px;
+    padding: 0px 25px;
+    border-radius: 4px;
+    font-family: 'ubuntu';
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.4s ease-in-out;
+} 
+#blockTontiner button:hover,button:active
+{
+    background-color: rgb(12, 12, 240);
+}
+
+#blockPayer
+{
+    display: block;
+    text-align: center;
+    display: none;
+}
+
+#blockPayer button
+{
+    color: white;
+    border: none;
+    background-color: transparent;
+    background-color: rgb(42, 42, 223);
+    height: 35px;
+    padding: 0px 25px;
+    border-radius: 4px;
+    font-family: 'ubuntu';
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.4s ease-in-out;
+} 
+#blockPayer button:hover
+{
+    background-color: rgb(12, 12, 240);
+}

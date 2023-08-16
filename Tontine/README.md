@@ -10,5 +10,12 @@ This is a contribution smart contract, written in **plutus language** and **Luci
 
 3. Cardano Node & Cardano-cli ***You can find it here  (https://developers.cardano.org/docs/get-started/installing-cardano-node/)***
 
+## To use the app
+
+1. Open the file index.html in the directory **/Tontine/public/index.html**
+
+2. Install your wallet extension in your browser
+
+3. Accept the access request to your wallet
 
 
